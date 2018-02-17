@@ -1,0 +1,8 @@
+select(student,[stipend>20|Name=Ajay])
+project(select(student,[stipend>30]),[Name])
+project(select(select(student,[stipend>30]),[RollNo>2]),[Name]);
+select(project(student,[Name,RollNo]),[RollNo>3])
+project(student,[Name])	
+cartesian(union(student:teacher):intersection(student:teacher))
+project(select(natural(student:player),[Runs>30]),[Name])
+project(rename(student,[scholar,sch_name]),[sch_name]);

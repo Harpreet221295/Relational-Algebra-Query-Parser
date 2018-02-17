@@ -1,0 +1,73 @@
+Documentation of Relational Algebra Query Parser
+
+The Relational algebra Query Parser has been implemented in C++. It comrises of two header files relation.h and database.h, their implementations and a main executable file.
+
+relation.h contains the definiton of the relation object which further contains the definition of relational schema. There are other utility member functions which helps in processing and displaying of relations.relation.cpp contains the implementation of all these member functions plus some auxillary functions defined in relation.h.
+
+database.h contains the definition of database object as well as definition of all operators. database.cpp contains the implementation of all these member functions and operators.
+
+A database object contains a list of relations and the operators are implemented as member functions of a database object.
+
+Relations are declared and tuples are inserted at compile time in main.cpp file. Then Queries from Query.txt file are read and result is executed on terminal.
+
+Syntax
+
+For creating a relation we first create a database object for example newData( refer in the main.cpp file). Then we declare a relation and pass the relational schema as a string in the constructor.
+
+The relational schema in the form of string is represented as 
+
+"col_name1 type1,col_name2 type2,col_name3 type3,......"  where col_name1,col_name2.. are names of the attributes and type1,type2... are their respective datatypes.
+
+creating a relation( at compile time in main.cpp file)  relation nr = relation("col_name1 type1,col_name2 type2,col_name3 type3,......"); where nr is the relation object.   
+
+inserting in a relation at compile time takes place with help of relation member function insert where we pass the a string as argument which comprises of comma separated values for the attributes.
+
+The set of values in the form string is 
+"val1,val2,val3,....."
+
+nr.insert("val1,val2,val3,...");
+
+We also insert this relation object into the database with the help of member function of database object.
+
+newData.InsertRelation("relation_name",nr); where "relation_name" is the name of the relation that one wants to keep
+
+
+Syntax for Queries
+
+space should not be present in any query
+syntax for select operator
+
+select operator is implemented only for the conditions that are either joined by OR or AND. The symbol used for OR in syntax is | and for AND is &.
+ 
+select(relation_name,[attr1op1attr2&attr3op2val2&attr3op2val2...])
+select(relation_name,[attr1op1attr2|attr3op2val2|attr3op2val2...]) where attr1,attr2,attr3 are the attribute names of relation denoted by relation_name and val1,val2,val3 are their respective values to be compared. Instead of a relation_name any other nested Query can also be present.
+example select(select(rel_name2,[at1op1val1,at2op2val2]),[attr3>val4])
+
+Allowed operators in this syntax are >,<,=
+
+syntax for project operator
+
+project(relation_name,[attr1,attr2,attr3,....]) where attr1,attr2,attr3 are the attributes of the relation denoted by relation_name
+Instead of a relation_name any other Query can also be present.
+
+syntax for rename operator
+
+rename(relation_name,[new_relation_name,new_attr1,new_attr2,....]) where new_relation_name is the new name for the relation and the new_attr1,new_attr2... are the new attribute names for ist attribute,second attribute and so on.
+Instead of a relation_name any other Query can also be present.
+
+syntax for union, intersection, cartesian and natural join opertaor
+
+union(relation_name1:relation_name2)
+intersection(relation_name1:relation_name2)
+natural(relation_name1:relation_name2)
+cartesian(relation_name1:relation_name2)  where relation_name1,relation_name2 are the names of two relations on which these operators are to be applied on. Instead of a relation_name1 and relation_name2 any other Query can also be present.
+Example cartesian(union(student:teacher):intersection(student:teacher))
+
+Executing Queries
+
+1.store all the queries in the file Query.txt each query in a new line
+2.save it and then on linux terminal change the directory to the one where all the cpp and main file reside using cd command
+3.write the command g++ -std=c++11 relation.cpp database.cpp main.cpp;
+4.once compilation is complete write ./a.out to run the object file and Result of Queries will be displayed on the ubuntu terminal 
+
+
